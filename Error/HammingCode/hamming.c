@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<math.h>   //pow
 #include<stdlib.h> // calloc
-#include<unistd.h> // sleep
 
 
 int main()
@@ -15,7 +14,7 @@ int main()
     //calculate no of rbits 2^rbit >= m_size + rbit +1
     while(1)
     {
-        if((m_size+rbit+1)<=(int)pow(2,rbit)) 
+        if((m_size+rbit+1)<=(int)pow(2,rbit))
             break;
         rbit++;
     }
@@ -25,7 +24,7 @@ int main()
         scanf("%d",&msg[i]);
     }
     k=0; // for 2^k
-    j=1; // for positioning rbit
+    j=1; // for positioning msg
     for(i=1;i<=(m_size+rbit);i++)
     {
         if(i==(int)pow(2,k))
@@ -45,20 +44,20 @@ int main()
         if(data[i]==8)
         {
             data[i]=0;
-            int even=0;
+            int count=0;
             for(j=i;j<=(m_size+rbit);j++)
             {
                 for(k=0;k<i;k++)
                 {
                     if(data[j]==1)
                     {
-                        even++;
+                        count++;
                     }
                     j++;
                 }
                 j=j+i-1;
             }
-            if(even%2==0)
+            if(count%2==0)
             {
                 data[i]=0;
             }
@@ -68,6 +67,7 @@ int main()
             }
         }
     }
+
     printf("This is the generated codeword: ");
     for(i=(m_size+rbit);i>=1;i--)
         printf("%d ",data[i]);
@@ -77,19 +77,23 @@ int main()
         scanf("%d",&data[i]);
 
     int c=0;
+    // C1 C2 C3
+    // D1 D2 D3
+    // 0  1  0 ->2
+
     int *parities=(int *)calloc(rbit,sizeof(int));
     for(i=1;i<=(m_size+rbit);i++)
     {   
         if(i==(int)pow(2,c))
         {
-            int even=0;
+            int count=0;
             for(j=i;j<=(m_size+rbit);j++)
             {
                 for(k=0;k<i;k++)
                 {
                     if(data[j]==1)
                     {
-                        even++;
+                        count++;
                     }
                     j++;
                 }
@@ -97,13 +101,13 @@ int main()
             }
             if(data[i]==1)
             {
-                even--;
+                count--;
             }
-            if(even%2 == data[i])
+            if(count%2 == data[i])
             {
                 parities[c]=0;
             }
-            else if(even%2 != data[i])
+            else if(count%2 != data[i])
             {
                 parities[c]=1;
             }
@@ -117,7 +121,7 @@ int main()
     }
     if(c==0)
     {
-        printf("No Error!");
+        printf("No Error!\n");
         exit(0);
     }
     printf("Error at position : %d\n",c);
@@ -130,9 +134,6 @@ int main()
     return 0;
 }
 
-//1 1 1 1 0 1
-//1 1 0 1 1 0 0 1 0 1
 
-
-// 1 0 1 1 1 1
-// 1 0 1 0 0 1 1 0 1 1
+// 1 0 1 1 0 0 1
+// 1 0 0 0 1 0 0 1 1 1 0

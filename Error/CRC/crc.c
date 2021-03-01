@@ -3,11 +3,12 @@
 #include<stdlib.h>
 
 void main() {
+    printf("Welcome to CRC Generation and Validation Program by cYpHeR under Dr. Salim \n");
     int i, j, keylen, msglen;
     char input[100], key[30], temp[30], quot[100], rem[30], key1[30];
     printf("Enter Dataword(without space): ");
     scanf("%s", input);
-    printf("Enter Divisor(without space): ");
+    printf("Enter Shared Divisor(without space): ");
     scanf("%s", key);
     keylen = strlen(key);
     msglen = strlen(input);
@@ -71,9 +72,9 @@ void main() {
     strcpy(rem, temp);
     for (int i = 0; i < strlen(rem); i++) {
         if (rem[i] != '0') {
-            printf("\nError in Codeword!");
+            printf("\nError in Codeword!\n");
             exit(0);
         }
     }
-    printf("\nNo error in Codeword!");
+    printf("\nNo error in Codeword!\n");
 }

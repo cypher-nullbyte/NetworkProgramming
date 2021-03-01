@@ -64,7 +64,6 @@ void checksumGen(int **data,int n,int k)
         printf("%d ",data[n][i]);
     }
     printf("<-CHECKSUM\n");
-    
 }
 
 void checksumChk(int **data,int n,int k)
@@ -92,6 +91,11 @@ void checksumChk(int **data,int n,int k)
         }
         printf("<-Segment [%d] \n",(i+1));
     }
+    for(int i=0;i<k;i++)
+    {
+        printf("%d ",data[n][i]);
+    }
+    printf("<-CHECKSUM (Receiver)\n");
     printf("-----------------\n");
     for(int j=0;j<k;j++)
         printf("%d ",chkBucket[j]);
@@ -123,11 +127,12 @@ void checksumChk(int **data,int n,int k)
     }
     printf("<-CHECKSUM\n");
     printf("%s",(accept ? "Accepted!" : "Rejected!"));
+    printf("\n");
 }
 
 int main()
 {
-    printf("Welcome to CHECKSUM Generation and Validation Program by cYpHeR under Dr. Salim \n");
+    printf("Welcome to CHECKSUM Generation and Validation Program by cYpHeR\n");
     int n,k;
     printf("Enter no of Segmets: ");
     scanf("%d",&n);
