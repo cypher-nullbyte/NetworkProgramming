@@ -69,6 +69,9 @@ void main() {
         rem[keylen - 1] = input[i + keylen];
         strcpy(temp, rem);
     }
+    printf("\nRemainder is: ");
+    for (i = 0; i < keylen - 1; i++)
+        printf("%c", rem[i]);
     strcpy(rem, temp);
     for (int i = 0; i < strlen(rem); i++) {
         if (rem[i] != '0') {
