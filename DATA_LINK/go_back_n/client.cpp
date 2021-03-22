@@ -8,14 +8,14 @@
 #include<unistd.h>
  
 #define cls() printf("33[H33[J (cleaned buffer)")
-                        //structure definition for accepting the packets.
+                        //structure definition for accepting the frames.
 
-struct frame
+struct window
 
 {
- int packet[40];
+ int frame[40];
 };
-            //structure definition for constructing the acknowledgement frame
+            //structure definition for constructing the acknowledgement window
 
 struct ack
 
@@ -30,7 +30,7 @@ int main()
  sockaddr_in serveraddr;
  socklen_t len;
  hostent * server;
- frame f1;
+ window f1;
  int windowsize,totalpackets,totalframes,i=0,j=0,framesreceived=0,k,buffer,l;
  ack acknowledgement;
  char req[50];
@@ -62,7 +62,7 @@ int main()
                                                 //collecting details from server.
  printf("\nWaiting for the server response.\n");
  recvfrom(clientsocket,(char*)&totalpackets,sizeof(totalpackets),0,(sockaddr*)&serveraddr,&len);
- printf("\nThe total packets are:\t%d\n",totalpackets);
+ printf("\nThe total frames are:\t%d\n",totalpackets);
  sendto(clientsocket,"RECEIVED.",sizeof("RECEIVED."),0,(sockaddr*)&serveraddr,sizeof(serveraddr));
  
  recvfrom(clientsocket,(char*)&totalframes,sizeof(totalframes),0,(sockaddr*)&serveraddr,&len);
@@ -75,7 +75,7 @@ int main()
  {
                                                 //initialising the receive buffer.
    printf("\nInitialising the receive buffer.\n");
-   printf("\nThe expected frame is %d with packets:  ",framesreceived);
+   printf("\nThe expected window is %d with frames:  ",framesreceived);
    j=0;
    buffer=i;
    while(j<windowsize && i<totalpackets)
@@ -85,18 +85,18 @@ int main()
     j++; 
    }
  
-   printf("\n\nWaiting for the frame.\n");
-                                                //accepting the frame.  
+   printf("\n\nWaiting for the window.\n");
+                                                //accepting the window.  
    recvfrom(clientsocket,(char*)&f1,sizeof(f1),0,(sockaddr*)&serveraddr,&len);
-   printf("\nReceived frame %d\n\nEnter -1 to send negative acknowledgement for the following packets.\n",framesreceived);
+   printf("\nReceived window %d\n\nEnter -1 to send negative acknowledgement for the following frames.\n",framesreceived);
  
-                                                //constructing the acknowledgement frame.
+                                                //constructing the acknowledgement window.
    j=0;
    l=buffer;
    k=0;
    while(j<windowsize && l<totalpackets)
    {
-    printf("\nPacket: %d\n",f1.packet[j]%(windowsize+1)); 
+    printf("\nFrame: %d\n",f1.frame[j]%(windowsize+1)); 
                                                 //accepting acknowledgement from the user.
     scanf("%d",&acknowledgement.acknowledge[j]);
  
@@ -104,7 +104,7 @@ int main()
     {
      if(k==0)
      {
-      i=f1.packet[j];
+      i=f1.frame[j];
       k=1; 
      } 
     }

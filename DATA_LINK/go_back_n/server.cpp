@@ -9,12 +9,11 @@
  
 #define cls() printf("33[H33[J") 
  
-  //structure definition for designing the packet.
+  //structure definition for designing the frame.
 
-struct frame
-
+struct window
 {
- int packet[40];
+ int frame[40];
 };
  
   //structure definition for accepting the acknowledgement.
@@ -34,7 +33,7 @@ int main()
  socklen_t len;
  int windowsize,totalpackets,totalframes,framessend=0,i=0,j=0,k,buffer,l;
  ack acknowledgement;
- frame f1;
+ window f1;
  char req[50];
  
  serversocket=socket(AF_INET,SOCK_DGRAM,0);
@@ -64,12 +63,11 @@ int main()
  cls();
  printf("\nThe windowsize obtained as:\t%d\n",windowsize);
  
- printf("\nObtaining packets from network layer.\n");
- printf("\nTotal packets obtained:\t%d\n",(totalpackets=windowsize*5));
+ printf("\nObtaining frames from network layer.\n");
+ printf("\nTotal frames obtained:\t%d\n",(totalpackets=windowsize*5));
  printf("\nTotal frames or windows to be transmitted:\t%d\n",(totalframes=5));
  
                                                             //sending details to client.
- printf("\nSending total number of packets.\n");
  sendto(serversocket,(char*)&totalpackets,sizeof(totalpackets),0,(sockaddr*)&clientaddr,sizeof(clientaddr));
  recvfrom(serversocket,req,sizeof(req),0,(sockaddr*)&clientaddr,&len);
  
@@ -88,20 +86,20 @@ int main()
                                                             //initialising the transmit buffer.
   bzero((char*)&f1,sizeof(f1));
   printf("\nInitialising the transmit buffer.\n");
-  printf("\nThe frame to be send is %d with packets:\t",framessend);
+  printf("\nThe window to be send is %d with frames:\t",framessend);
   buffer=i;
   j=0;
-                                                            //Builting the frame.
+                                                            //Builting the window.
   while(j<windowsize && i<totalpackets)
   {
    printf("%d  ",i%(windowsize+1));
-   f1.packet[j]=i;
+   f1.frame[j]=i;
    i++;
    j++;
   }
-  printf("\nSending frame %d\n",framessend);
+  printf("\nSending window %d\n",framessend);
  
-    //sending the frame.
+    //sending the window.
   sendto(serversocket,(char*)&f1,sizeof(f1),0,(sockaddr*)&clientaddr,sizeof(clientaddr));
     //Waiting for the acknowledgement.
   printf("\nWaiting for the acknowledgement.\n");
@@ -109,7 +107,7 @@ int main()
   cls();
  
                                    
-//Checking acknowledgement of each packet.
+//Checking acknowledgement of each frame.
   j=0;
   k=0;
   l=buffer;
@@ -117,9 +115,9 @@ int main()
   {
    if(acknowledgement.acknowledge[j]==-1)
    {
-    printf("\nNegative acknowledgement received for packet: %d\n",f1.packet[j]%(windowsize+1));
-    printf("\nRetransmitting from packet: %d.\n",f1.packet[j]%(windowsize+1));
-    i=f1.packet[j];
+    printf("\nNegative acknowledgement received for frame: %d\n",f1.frame[j]%(windowsize+1));
+    printf("\nRetransmitting from frame: %d.\n",f1.frame[j]%(windowsize+1));
+    i=f1.frame[j];
     k=1;
     break;
    }
@@ -129,7 +127,7 @@ int main()
  
   if(k==0)
   {
- printf("\nPositive acknowledgement received for all packets within the frame: %d\n",framessend);
+ printf("\nPositive acknowledgement received for all frames within the window: %d\n",framessend);
   }
  
   framessend++;
