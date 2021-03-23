@@ -186,12 +186,6 @@ int main()
         for(int j=7;j>=0;j--)
             data[i][j]=m2[y++];
     }
-    for(int i=0;i<n;i++)
-    {
-        for(int j=0;j<16;j++)
-            printf("%d ",data[i][j]);
-        printf("\n");
-    }
     checksumGen(data,n,k);
     printf("\nNow sender is sending the segments with checksum ... \n\n");
     printf("------------------------------------------\n");
@@ -200,19 +194,25 @@ int main()
     switch(choice)
     {
         case 'y':
-            printf("You are supposed to enter %d segments of %d length!\n",n,k);
-            for(int i=0;i<n;i++)
-            {
-                printf("Enter segment[%d] (space separated): ",(i+1));
-                for(int j=0;j<k;j++)
+                printf("Enter Message: ");
+                char msg[50];
+                scanf(" %[^\n]s",msg);
+                n=((int)strlen(msg))%2==0 ? ((int)strlen(msg))/2 : ((int)strlen(msg))/2+1;
+                int x=0;
+                for(int i=0;i<n;i++)
                 {
-                    scanf("%d",&data[i][j]);
+                    int num=(int)msg[x++];
+                    int *m1= decToBin(num,8);
+                    num=(int)msg[x++];
+                    int *m2=decToBin(num,8);
+                    int y=0;
+                    for(int j=15;j>=8;j--)
+                        data[i][j]=m1[y++];
+                    y=0;
+                    for(int j=7;j>=0;j--)
+                        data[i][j]=m2[y++];
                 }
-            }
-            printf("Enter the checksum (space separated): ");
-            for(int j=0;j<k;j++)
-                scanf("%d",&data[n][j]);
-            break;
+                break;
         case 'n':
             printf("Transmission successfull without error!\n");
             break;

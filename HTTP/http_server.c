@@ -20,7 +20,7 @@ int main()
     
     char http_header[2048]="HTTP/1.1 200 OK\r\n\n";
     strcat(http_header,response_data);
-
+    
     //Create a socket
     int server_socket;
     server_socket=socket(AF_INET,SOCK_STREAM,0);
