@@ -10,18 +10,7 @@
 
 #include<unistd.h>
 #include <time.h>
-// #include<pthread.h>
 
-// void *thread_function(void *arg);
-
-int timeout ( int seconds )
-{
-    clock_t endwait;
-    endwait = clock () + seconds * CLOCKS_PER_SEC ;
-    while (clock() < endwait) {}
-
-    return  1;
-}
 typedef struct{
     char data[1024];
 }Packet;
@@ -70,9 +59,6 @@ void main(int argc, char **argv)
             again:
             sendto(sockfd,&frame_send,sizeof(Frame),0,(struct sockaddr*)&serverAddr,sizeof(serverAddr));
             printf("[+]Frame {%d | %d} sent\n",frame_send.sq_no,(frame_send.sq_no%2));
-            // pthread_t a_thread;
-            // pthread_create(&a_thread,NULL,thread_function,&ack_recv); 
-            // pthread_join(a_thread,NULL); 
         }
         int addr_size=sizeof(serverAddr);
         int f_recv_size=-1;
@@ -90,8 +76,6 @@ void main(int argc, char **argv)
             frame_id++;
         }else{
             printf("[-]ACK Not Received or corrupted.\n");
-            // ack_recv=0;
-            // timeout(1);
             printf("[+]Sending Again!\n");
             ack_recv=1;
             goto again;
