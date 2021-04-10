@@ -32,7 +32,7 @@ void main(int argc, char **argv)
     addr_size=sizeof(si_other);
     recvfrom(sockfd,buffer,1024,0,(struct sockaddr*)&si_other,&addr_size);
     printf("[+] Data Received: %s\n",buffer);
-
+    strcpy(buffer,"Hello Client!");
     sendto(sockfd,buffer,1024,0,(struct sockaddr*)&si_other,addr_size);
     printf("[+] Data Sent: %s\n",buffer);
 

@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     //check for error with the connection
     if(connection_status==-1)
     {
-        printf("There was an erro while making connection to the remote socket\n\n");
+        printf("There was an error while making connection to the remote socket\n\n");
         exit(0);
     }
 
@@ -48,3 +48,5 @@ int main(int argc, char **argv)
     close(network_socket);
     return 0;
 }
+
+// UDP +
