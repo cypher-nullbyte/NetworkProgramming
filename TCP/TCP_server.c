@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
     struct sockaddr_in client_address;
     socklen_t cliLen=sizeof(client_address);
     client_socket=accept(server_socket,(struct sockaddr*)&client_address,&cliLen);
-    printf("%d\n",client_socket);
+    // printf("%d\n",client_socket);
     //send the message
     send(client_socket,server_message,sizeof(server_message),0);
 
