@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
     char buffer[256];
     if(argc!=3)
     {
-        fprintf(stderr,"Usage: %s <hostnam> <port>",argv[0]);
+        fprintf(stderr,"Usage: %s <hostname> <port>",argv[0]);
         exit(0);
     }
     portno=atoi(argv[2]);
