@@ -193,13 +193,15 @@ void separate(char str[], char ipClass)
 int main()
 {
     string input;
+    cout<<"Enter a valid IP: ";
     cin>>input;
     IPAddress ip;
     string output=ip.validIPAddress(input);
     cout<<"The given IP Address is: "<<output<<"\n";
     if(output.compare("IPv4")!=0) exit(0);
-    char ip4[input.length()];
-    for(int i=0;i<input.length();i++) ip4[i]=input[i];
+    char ip4[input.size()+1];
+    for(int i=0;i<input.size();i++) ip4[i]=(char)input[i];
+    ip4[input.size()]='\0';
     char ipClass = findClass(ip4);
     printf("Given IP address belongs to Class %c\n",ipClass);
     separate(ip4, ipClass);
@@ -207,3 +209,4 @@ int main()
 }
 
 //2001:0db8:85a3:0:0:8a2e:0370:7334
+//2001:0db8:85a3:0000:0000:8a2e:0370:7334
