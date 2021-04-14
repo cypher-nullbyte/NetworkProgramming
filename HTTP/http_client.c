@@ -22,12 +22,12 @@ int main(int argc, char *argv[])
     //CONNECT TO ADDRESS
     struct sockaddr_in remote_address;
     remote_address.sin_family=AF_INET;
-    remote_address.sin_port=htons(80);
+    remote_address.sin_port=htons(8081);
     remote_address.sin_addr.s_addr=INADDR_ANY;
     inet_aton(address,&remote_address.sin_addr);
     connect(client_socket,(struct sockaddr*) &remote_address, sizeof(remote_address));
     
-    char request[]="GET / HTPP2.0/\r\n\n";
+    char request[]="GET / HTPP1.1/\r\n\n";
     char response[4096];
     send(client_socket,request,sizeof(request),0);
 
