@@ -104,7 +104,10 @@ void distributeIP(Address *prev_hook,Address * START,Address *END, unsigned long
 int main()
 {
     printf("Welcome to ISP Addressing Solver by cYpHeR under Dr. Saleem!\n\n");
-    printf("Do two favours :)\n1.Please enter groups' details in descending order of IP req. per customer !!!\n2.Enter only valid and possible requirements!!!\n\n\n");
+    printf("Do two favours :)\n1.Please enter groups' details in descending order of IP req. per customer !!!\n2.Enter only valid and possible requirements!!!\n\n");
+    
+    printf("No need of any favours, this program is fully generalized for any valid input!!!!!\n\n");
+    
     Address *ISP;
     printf("Enter Network IP and Mask of ISP: ");
     ISP=readAndCreateAddress();
@@ -148,7 +151,24 @@ int main()
         printf("Total IP addresses: %lu\n",((unsigned long)grps[i]->no_cust*(unsigned long)grps[i]->add_per_cust));
         printf("------------------------------------\n\n");
     }
+
+    int cus;
+    Address *temp=prev_add;
+    for(int i=0;i<n;i++)
+    {
+        printf("Enter customer no of Group[%d]: ",(i+1));
+        scanf("%d",&cus);
+        copyIP(temp,grps[i]->start);
+        incrementIP(temp,(unsigned long)(cus-1)*grps[i]->add_per_cust);
+        printf("-------------\nStarting IP of Customer [%d]: ",cus);
+        printAddress(temp);
+        incrementIP(temp,(unsigned long)(grps[i]->add_per_cust-1));
+        printf("Ending IP of Customer [%d]: ",cus);
+        printAddress(temp);
+        printf("-----------------------------\n\n");
+    }
+
+
     return 0;
 }
 
-// ip per customer
