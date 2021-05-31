@@ -136,7 +136,7 @@ int main()
     int n,k;
     printf("Enter no of Segmets: ");
     scanf("%d",&n);
-    printf("Enter bit lenght of each segmet: ");
+    printf("Enter bit length of each segmet: ");
     scanf("%d",&k);
     int len=(n+1)*sizeof(int *)+ (n+1)*(k)*sizeof(int);
     int **data=(int **)malloc(len);
