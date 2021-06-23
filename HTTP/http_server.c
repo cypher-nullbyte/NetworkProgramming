@@ -23,7 +23,7 @@ int main()
     
     //Create a socket
     int server_socket;
-    server_socket=socket(AF_INET,SOCK_STREAM,0);
+    server_socket=socket(AF_INET,SOCK_DGRAM,0);
 
     //DEFINE THE ADDRESS
     struct sockaddr_in server_address;
@@ -32,13 +32,14 @@ int main()
     server_address.sin_addr.s_addr=INADDR_ANY;
 
     bind(server_socket,(struct sockaddr *)&server_address,sizeof(server_address));
-
-    listen(server_socket,5);
     int client_socket;
     while(1)
     {
+
         client_socket=accept(server_socket,NULL,NULL);
-        send(client_socket,http_header,sizeof(http_header),0);
+        socklen_t len=sizeof(client_socket);
+        sendto(client_socket,http_header,sizeof(http_header),0,(struct sockaddr*)&client_socket,len);
+
         close(client_socket);
     }
     return 0;

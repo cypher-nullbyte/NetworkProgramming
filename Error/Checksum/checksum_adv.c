@@ -160,7 +160,8 @@ void checksumChk(int **data,int n,int k)
 
 int main()
 {
-    printf("Welcome to CHECKSUM Generation and Validation Program by cYpHeR under Dr. Salim\n");
+    printf("CHIRANJEET SINGH | 19BCI0016\n");
+    printf("--------------------\n");
     int n,k;
     printf("Enter Message: ");
     char msg[50];
